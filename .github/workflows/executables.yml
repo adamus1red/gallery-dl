@@ -10,6 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
+        python: ["3.8", "3.9", "3.10"]
 
     steps:
     - uses: actions/checkout@v2
@@ -17,7 +18,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8
+        python-version: ${{ matrix.Python }}
 
     - name: Build executable
       run: |
@@ -27,6 +28,6 @@ jobs:
     - name: Upload executable
       uses: actions/upload-artifact@v2
       with:
-        name: gallery-dl-${{ matrix.os }}
+        name: gallery-dl-py${{ matrix.Python }}-${{ matrix.os }}
         path: |
           dist
